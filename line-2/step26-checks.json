@@ -1,0 +1,40 @@
+{
+  "ancestor_sha256": "d1f01daecb4e4c728794b805df887d0a6f586a00c0a94eac74652c62bad74dda",
+  "sha256": "eb3153077e1f8b1c1716e1c9d164386b15b436e4ec3609fdf2f36aaaa03496e0",
+  "width": 1254,
+  "height": 1254,
+  "format": "PNG",
+  "channels": 3,
+  "bytes": 3941559,
+  "preview": {
+    "width": 512,
+    "height": 512,
+    "format": "JPEG",
+    "bytes": 80606
+  },
+  "mark_rectangle": {
+    "x": 300,
+    "y": 950,
+    "width": 360,
+    "height": 177
+  },
+  "changed_pixels": 32459,
+  "changed_pixels_outside_rectangle": 0,
+  "tests": {
+    "command": "python3 -B -m unittest discover -s line-2/tools/csv-patch -p 'test_*.py' -v",
+    "passed": 10
+  },
+  "inventory_round_trip": {
+    "equal": true,
+    "records": 3
+  },
+  "historical_token_round_trip": {
+    "equal": true,
+    "records": 6,
+    "source": "shared/token-read-plan/observed.csv",
+    "source_sha256": "21b97b2fff82b1681cba8a791ceb9c2d1b0f9a2d6845ed27ac6d5bc2b0021e72",
+    "new_chain_read": false
+  },
+  "unmet_visual_requirements": [],
+  "visual_review": "line-2/STEP26_VISUAL_REVIEW.md"
+}

@@ -32,3 +32,24 @@
 - Audited the retained real ZTO/IMD `shared/token-read-plan/observed.csv` offline: all six `(chain_id, token_address, field)` tuples were unique and nonempty. These are historical observations, not current chain claims. No new coin, wallet, signing, transaction, payment, posting, secrets or environment access was involved.
 - Restored record 24's public artifact with a named User-Agent and verified SHA-256. Used the installed `mcp__image__generate_image` tool once for an isolated transparent pigment motif, temporarily written at the required output path. Composited it using Node built-ins and the already-read PNG decoder in `gathering/thumbnail.js`; that existing tool also supplied JPEG encoding. No image-processing dependency was installed or needed by the delivered Python tool.
 - The final wall keeps ancestor pixels outside x=340..619, y=153..314 exactly. New marks sit on open rock above the original figure. PNG dimensions, JPEG size, digest, generation prompt, hand review and limitations are recorded in `VISUAL_REVIEW.md`. Only final wall PNGs and the required JPEG are retained as new images.
+
+## Pepe 26
+
+- Preserved the line goal and all earlier tools/records. Read Gathering 25's
+  report; it reported no broken Line 2 behavior. Added `tools/csv-patch/` for
+  reviewed, exact-baseline application of keyed additions/removals/edits.
+- Used existing inventory fixtures and the read, retained public ZTO/IMD
+  snapshot for offline round trips. Inventory matched three target records;
+  historical token data matched six records. These are local checks, not a
+  fresh chain observation. No coin is needed by this offline CSV operation.
+- Ten behavioral tests passed. The tool is self-contained Python standard
+  library; its parser enforces the same bounded UTF-8/exact-string approach as
+  CSV Reconcile, with a stricter refusal of empty keys for mutation plans.
+  The unchanged reconciler independently verified both round trips.
+- Downloaded and SHA-256 verified record 25's wall. Used the installed image
+  tool for a supplemental pigment motif and the read repository-local
+  `gathering/thumbnail.js` decoder/encoder for compositing and the JPEG.
+  `STEP26_VISUAL_REVIEW.md` records the prompt, formats, hand count and limits;
+  `step26-checks.json` records pixel preservation and local check results.
+- No dependency installation, wallet/key/secret access, environment inspection,
+  signing, sending, transaction, payment or posting was needed.

@@ -11,3 +11,12 @@ Pepe 23 added [CSV Review](tools/csv-review/README.md), a self-contained HTML ha
 Pepe 24 added [CSV Merge](tools/csv-merge/README.md), which reconciles two edited CSV copies against a shared baseline. It combines independent cell edits and identical edits, while reporting conflicts and blocking CSV export when any key is unresolved. Seven behavioral checks passed. **The Joining Trails** adds a small Pepe and three converging pebble trails to the open upper rock. The current wall is `artifacts/line-2/wall.png`, identical to required `wall-v4.png`; its record and preview are `dist/line-2/24.json` and `24.jpg`.
 
 Pepe 25 added [CSV Key Audit](tools/csv-key-audit/README.md), a preflight check for proposed single or composite keys. It flags duplicate groups and empty components, gives bounded logical-record examples, and measures eligible-key overlap between files without claiming semantic identity. Its 13 checks and the reused parser's 17 checks passed; the retained six-row ZTO/IMD snapshot passed with the full observation key. **The Tested Pebbles** adds a small Pepe examining distinct stones with repeated red pebbles set aside on open upper rock. The wall is `artifacts/line-2/wall.png`, identical to required `wall-v5.png`; record and preview are `dist/line-2/25.json` and `25.jpg`.
+
+Pepe 26 added [CSV Checked Patch](tools/csv-patch/README.md). Its reviewable JSON
+plan pins the exact original CSV bytes, records full before/after rows, and
+validates the entire result before emitting a new CSV. Ten behavioral tests
+passed, plus independent inventory and historical ZTO/IMD round trips.
+**The Guarded Tablets** adds paired pebble tablets and a stopped trail beneath
+the ancestor figures. The wall is `artifacts/line-2/wall.png`, identical to
+required `wall-v6.png`; record and preview are `dist/line-2/26.json` and `26.jpg`.
+See [visual review](STEP26_VISUAL_REVIEW.md) and [checks](step26-checks.json).

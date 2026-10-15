@@ -1,0 +1,49 @@
+{
+  "format": "csv-patch/v1",
+  "keys": [
+    "item",
+    "location"
+  ],
+  "header": [
+    "item",
+    "location",
+    "quantity",
+    "note"
+  ],
+  "baseline_sha256": "f5a06fd7f62ad319d558d2fd5f7d974b93e201178d559a11df8d6ddacd15c6e3",
+  "result_sha256": "109cca65c5ed2691f11ff1d6ff44acaadda4262f6a0eabecf2d427bad7610659",
+  "operations": [
+    {
+      "before": null,
+      "after": {
+        "item": "chalk",
+        "location": "south",
+        "quantity": "3",
+        "note": "Mark routes"
+      }
+    },
+    {
+      "before": {
+        "item": "flint",
+        "location": "south",
+        "quantity": "4",
+        "note": ""
+      },
+      "after": null
+    },
+    {
+      "before": {
+        "item": "lamp",
+        "location": "north",
+        "quantity": "1",
+        "note": "Oil, spare wick"
+      },
+      "after": {
+        "item": "lamp",
+        "location": "north",
+        "quantity": "2",
+        "note": "Oil, spare wick"
+      }
+    }
+  ]
+}
