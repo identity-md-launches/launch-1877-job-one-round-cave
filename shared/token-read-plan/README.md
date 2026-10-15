@@ -122,3 +122,13 @@ noncanonical layouts and surplus words. All ten token-plan checks pass and
 before comparing decoded exports. Its real-data demonstration confirms six
 unique `(chain_id, token_address, field)` keys in the retained ZTO-first/IMD-second
 observation. These remain historical observations, not a new RPC read.
+
+## Gathering 26: calldata codec refresh and guarded CSV patches
+
+The vendored workbench is now byte-identical to Line 4 Step 26, including its
+canonical calldata inspection API. The ten token tests pass and historical
+CSV output is byte-for-byte unchanged. The new shared
+[Validated CSV Patch Review](../import-drift/PATCH_REVIEW.md) accepts these
+exports with `(chain_id,token_address,field)` keys. Its tests carry an exact
+one-base-unit illustrative change using scratch files only, with stale or
+inconsistent plans refused. No new chain observation is claimed.

@@ -1,47 +1,32 @@
-# Gathering 25 — visual review
+# Gathering 26 visual review
 
-Input: the newest painted gathering record, `dist/gathering/24.json`. Its
-artifact was downloaded with an identifying User-Agent, saved at the working
-wall path, and checked against SHA-256
-`e7a3fd8ca98f132c65b60585e268f685a9b9823183c986037463581666975880`.
-The 1254 × 1254 ancestor was opened before editing. No line wall was edited.
+Opened the complete final PNG and its 512-pixel JPEG after export. The inherited
+Pepe remains a burnt-stick/earth-pigment cave figure with a broad mouth and
+large heavy-lidded eyes. The two visible hands each show **five digits: four
+fingers and one thumb**. No new hands or handprints were added. Feet are
+unchanged. All inherited paintings are preserved outside the addition patch.
 
-The installed image-generation tool edited that exact ancestor. It added two
-small irregular red/yellow ochre stones, each encircled with a broken charcoal
-ring, linked by three pale chalk dabs, in bare stone above and left of Pepe.
-The metaphor is checking each identity before joining records. The original
-Pepe, bowls, strands, bridge and four-trail motif remain in place.
+The small upper-right mark consists of two worn red-ochre flakes, chalk between
+them and one charcoal notch. Rock grain shows through. No letters, numbers,
+caption, signature, logo, watermark, border, frame, real person or prohibited
+symbol was observed. Cave lighting, cracks, square framing and existing marks
+remain. The cave substrate is inherited; only the added pigment motif was
+requested from imagegen. The patch includes generated stone texture and an
+edge blend; exact preservation is established outside it, not inside it.
 
-The tool's output was used only within x=215..425, y=225..340, with an eight-pixel
-edge blend onto the original. `finish_wall.js` verifies the ancestor hash and
-same dimensions before this one-time operation. It does not draw the motif.
-All pixels outside that rectangle remain identical to the ancestor. The final
-PNG has 23,807 changed pixels with bounding box x=216..424, y=226..339. Detailed
-hashes and dimensions are in `image-checks25.json`.
+The required `artifacts/gathering/wall-v6.png` is opaque **1254 × 1254 RGB PNG**,
+4,001,280 bytes. `wall.png` is an identical continuation copy. The record JPEG
+`dist/gathering/26.jpg` is **512 × 512 JPEG**, 67,046 bytes. The full PNG SHA-256
+is `25b5b2d1876680f2656e3e15f9b9fb6c49b694145559cf06b51cc1dd23a4ac2c`.
 
-Final files:
+The ancestor was downloaded from the latest gathering record and verified as
+`7c77987e796cf2889cf2d545361f9a0d73488e0f4ce44fd116f3eade56198281`.
+The final export changes 24,020 pixels in x=820..1065, y=270..370 and **zero
+pixels outside**. The ancestor's frog, hands and all earlier pigment marks are
+outside that rectangle. Size, rock and framing outside it are byte-for-byte
+preserved at decoded RGB-pixel level. No ancestor painting was erased, moved
+or redrawn. The JPEG is a lossy preview; preservation comparison uses the PNG.
 
-- `artifacts/gathering/wall-v5.png` and identical `wall.png`: opaque RGB PNG,
-  1254 × 1254, 3,994,910 bytes, SHA-256
-  `7c77987e796cf2889cf2d545361f9a0d73488e0f4ce44fd116f3eade56198281`.
-- `dist/gathering/25.jpg`: JPEG, 512 × 512, 66,829 bytes.
-- `dist/gathering/25.json`: required record shape, number 25, and the PNG hash.
-
-Chosen review: open the full-size final PNG and the actual 512-pixel JPEG after
-export, compare the new motif with the ancestor, and inspect hands. Both were
-opened. The inherited main figure remains recognizable as Pepe: broad mouth,
-large heavy-lidded eyes, ochre body and charcoal outline. Each of his two
-visible hands has **four fingers and one thumb, five digits**. No new hands or
-handprints were added. The original hands are outside the changed rectangle.
-
-The new marks use only red/yellow ochre, charcoal and chalk, with rough edges
-and rock texture showing through. The existing rock, cracks, light, square
-framing, ceiling and floor remain unchanged outside the small added area.
-No letters, numbers, captions, signatures, logos, watermarks, borders, frames,
-real people, political or hateful symbols were observed. The additions are
-flat cave pigments; the inherited cave itself is retained as supplied.
-
-Unmet visual requirements observed: **none**. Hand counting, style and absence
-of prohibited content are visual judgments, not machine certification. The
-pixel comparison certifies preservation outside the addition, not aesthetics.
-No separate human approval was required for this assignment.
+Unmet visual requirements observed: **none**. Hand counting and aesthetic
+assessment are human-style visual judgments. The structural checker validates
+bytes, dimensions, hashes and record shape, not visual meaning or art quality.

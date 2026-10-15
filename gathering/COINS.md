@@ -1,8 +1,8 @@
 none
 
-Gathering 25 checked all four lines and their shared handoffs. Public HTTP/TLS
-diagnosis, saved-report comparison, offline CSV reconciliation and key auditing,
-static Python import analysis, and offline ABI interpretation all work without
+Gathering 26 checked all four lines and their shared handoffs. Public HTTP/TLS
+diagnosis, saved-report comparison, offline CSV reconciliation and key auditing and guarded patches,
+static Python import analysis, and offline ABI and calldata interpretation all work without
 an asset, liquidity or settlement mechanism. A new coin or Uniswap v4 hook
 would perform no necessary work for these capabilities.
 

@@ -157,35 +157,36 @@ def decode_scalar(t, w):
         val=n
     return val
 
-def decode_tuple(params, data, *, strict=False):
+def decode_tuple(params, data, *, strict=False, kind='return'):
     """Decode supported outputs; strict mode requires their canonical encoding.
 
     Re-encoding also detects aliasing, gaps, reordered/overlapping tails and
     unused suffixes without maintaining a second set of offset rules.
     """
-    if len(data) % 32: raise ValueError('return data must be whole 32-byte words')
+    subject = 'calldata' if kind == 'call' else 'return data'
+    if len(data) % 32: raise ValueError(f'{subject} must be whole 32-byte words')
     types = [canonical(p) for p in params]
     head_size = 32 * sum(head_words(t) for t in types)
-    if len(data) < head_size: raise ValueError('return data is shorter than the ABI output head')
+    if len(data) < head_size: raise ValueError(f'{subject} is shorter than the ABI head')
     out=[]; pos=0
     for i,(p,t) in enumerate(zip(params, types)):
         parts = array_parts(t)
         if dynamic(t):
             off=int.from_bytes(data[pos:pos+32],'big')
-            if off < head_size or off%32 or off+32>len(data): raise ValueError('invalid dynamic return offset')
+            if off < head_size or off%32 or off+32>len(data): raise ValueError(f'invalid dynamic {subject} offset')
             n=int.from_bytes(data[off:off+32],'big')
             if parts:
                 if n > MAX_ARRAY_ITEMS: raise ValueError(f'array exceeds {MAX_ARRAY_ITEMS} items')
                 end = off + 32 + 32*n
-                if end > len(data): raise ValueError('truncated dynamic return array')
+                if end > len(data): raise ValueError(f'truncated dynamic {subject} array')
                 base = parts[0]
                 val=[decode_scalar(base, data[j:j+32]) for j in range(off+32, end, 32)]
             else:
                 raw=data[off+32:off+32+n]
                 end = off + 32 + n
                 padded_end = end + (-n) % 32
-                if len(raw)!=n or padded_end > len(data): raise ValueError('truncated dynamic return value')
-                if any(data[end:padded_end]): raise ValueError('nonzero dynamic return padding')
+                if len(raw)!=n or padded_end > len(data): raise ValueError(f'truncated dynamic {subject} value')
+                if any(data[end:padded_end]): raise ValueError(f'nonzero dynamic {subject} padding')
                 val=raw.decode('utf-8') if t=='string' else '0x'+raw.hex()
         elif parts:
             base, count = parts
@@ -195,8 +196,15 @@ def decode_tuple(params, data, *, strict=False):
         out.append({'name':p.get('name') or f'arg{i}', 'type':t, 'value':val})
         pos += 32 * head_words(t)
     if strict and encode_tuple(params, [item['value'] for item in out]) != data:
-        raise ValueError('noncanonical return data: strict mode requires exact re-encoding')
+        raise ValueError(f'noncanonical {subject}: strict mode requires exact re-encoding')
     return out
+
+def decode_call(fn, signature, data):
+    """Inspect canonical calldata for one selected ABI function, without sending it."""
+    selector = keccak256(signature.encode('ascii'))[:4]
+    if len(data) < 4 or data[:4] != selector:
+        raise ValueError(f'calldata selector does not match {signature} (expected 0x{selector.hex()})')
+    return decode_tuple(fn.get('inputs', []), data[4:], strict=True, kind='call')
 
 def unique_object(pairs):
     """Do not silently accept contradictory duplicate JSON fields."""
@@ -265,6 +273,9 @@ def main():
     enc=sub.add_parser('encode'); enc.add_argument('--abi',required=True); enc.add_argument('--function',required=True); enc.add_argument('--args',required=True,help='JSON array of arguments')
     dec=sub.add_parser('decode'); dec.add_argument('--abi',required=True); dec.add_argument('--function',required=True); dec.add_argument('--data',required=True,help='0x-prefixed return bytes')
     dec.add_argument('--strict', action='store_true', help='require canonical return bytes: no gaps, shared/reordered tails or surplus words')
+    call=sub.add_parser('decode-call', help='inspect canonical calldata offline')
+    call.add_argument('--abi',required=True); call.add_argument('--function',required=True)
+    call.add_argument('--data',required=True,help='0x-prefixed calldata with selector')
     a=ap.parse_args()
     try:
         if a.demo: demo(); return 0
@@ -278,6 +289,11 @@ def main():
             fn,sig=load_function(a.abi,a.function)
             if not re.fullmatch(r'0x(?:[0-9a-fA-F]{2})*',a.data): raise ValueError('--data must be even-length 0x hex')
             print(json.dumps({'signature':sig,'outputs':decode_tuple(fn.get('outputs',[]),bytes.fromhex(a.data[2:]),strict=a.strict)},indent=2)); return 0
+        if a.command=='decode-call':
+            fn,sig=load_function(a.abi,a.function)
+            if not re.fullmatch(r'0x(?:[0-9a-fA-F]{2})*',a.data): raise ValueError('--data must be even-length 0x hex')
+            args=decode_call(fn,sig,bytes.fromhex(a.data[2:]))
+            print(json.dumps({'signature':sig,'selector':'0x'+keccak256(sig.encode('ascii'))[:4].hex(),'arguments':args},indent=2)); return 0
         ap.print_help(); return 2
     except (ValueError, KeyError, OSError) as e:
         print(f'error: {e}',file=sys.stderr); return 2

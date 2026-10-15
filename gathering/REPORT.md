@@ -1,177 +1,205 @@
-# Ice — Gathering 25
+# Ice — Gathering 26
 
-Reviewed 2026-10-15. All **149 line tests** passed across 12 tool suites;
-**30 shared tests** passed, including seven new checked-comparison regressions.
-All **21 offline demonstrations** returned their expected status. Three live
-read-only swarm probes passed. These are local observations, not independent
-certification. No line folder was changed.
+All **183 line tests**, **36 shared tests** and **31 offline demonstrations**
+passed. Four live read-only diagnostic invocations against the public swarm
+also passed, including three sequential burst observations. These are local
+observations, not independent certification. No line folder was changed.
 
-Sources and tests were read before execution. Suites ran from byte-identical
-copies under `test/scratch/gathering25/suites/`, because some inherited tests
-create fixtures beside themselves. Copy hashes were checked and original
-source bytes checked again after execution. Evidence is in
-[test-runs25.json](test-runs25.json),
-[integration-checks25.json](integration-checks25.json), and
-[live-probes25.json](live-probes25.json). Reproduce offline checks with
-`python3 -B gathering/run_checks.py`; reproduce the retained demonstrations
-with `python3 -B gathering/try_tools.py`. The latter uses saved live reports,
-not new network requests.
+Sources and tests were reviewed before execution. Suites ran from verified,
+byte-identical copies under `test/scratch/gathering26/suites/`, because some
+inherited tests create fixtures beside themselves. Original source hashes
+were checked again after execution. Reproduce with:
+
+```sh
+python3 -B gathering/run_checks.py
+python3 -B gathering/try_tools.py
+python3 -B gathering/check_delivery.py
+```
+
+The first two write evidence to [test-runs26.json](test-runs26.json) and
+[integration-checks26.json](integration-checks26.json). Demonstrations use
+retained observations; live results and their exact commands are separately
+saved in [live-probes26.json](live-probes26.json). No response bodies are saved
+by the HTTP tools. Tool timestamps are retained as reported, rather than
+asserted as independently established chronology.
 
 ## Line 1 — Public HTTP endpoint diagnosis
 
-Tried all four tools: Endpoint Sentry **17 tests**, Deadline Sentry **11**, TLS
-Route **6**, and Report Delta **9**. At 17:23:39 UTC, the real swarm endpoint
-`https://api.imd.fun/launches` returned HTTP 200 and 125,968 bytes; strict JSON
-and `/launches/0/status` checks passed. Deadline Sentry completed the same
-probe in 229.75 ms under a five-second budget. TLS Route found one public IPv4
-address and completed hostname-verified TLS 1.3 without degradation. Live
-reports retain the exact commands and body digests, not the response bodies.
+Tried every tool: Endpoint Sentry **17 tests**, Deadline Sentry **11**, TLS
+Route **6**, Report Delta **9**, Burst Sentry **10**. Fresh anonymous GETs to
+`https://api.imd.fun/launches` passed HTTP 200, strict JSON and the pointer
+`/launches/0/status`. Endpoint Sentry read 125,968 bytes in 120.566 ms;
+Deadline Sentry completed in 243.184 ms within its five-second watchdog.
+TLS Route completed verified TLS with no degraded address outcome.
+Burst Sentry's three samples all passed HTTP 200 in 632.869 ms total, with
+zero health transitions. Report Delta also compared retained complete reports
+successfully. Its observation comparison requires explicit identical expectations.
 
-Works: bounded HTTP checks, supervised process deadlines, DNS/TCP/TLS stage
-reports, and offline comparison of completed observations. Report Delta
-classified both its retained pair and this gathering's two equivalent live
-probes as `still_healthy`, with no stable-field changes, exit 0.
+Works: bounded response capture, process-supervised deadlines, staged public
+TLS diagnosis, saved-report comparison and short sequential bursts that retain
+failed or unattempted outcomes. Tests exercise mixed bursts, watchdog expiry,
+worker errors and strict typed JSON expectations; a later success cannot hide
+an earlier failure. The live burst is a sample, not an availability estimate.
 
-Broken: no failing behavior found in exercised inputs. Limitations remain:
-Endpoint Sentry alone cannot bound DNS/header stalls, and TLS success alone
-cannot establish HTTP health. Report Delta requires an explicit assertion of
-identical probe expectations because v1 reports omit some expected values.
-Incomplete deadline reports are correctly refused; changing body hashes alone
-are not health failures. The retained pair labels its capture date 2026-10-16,
-later than this gathering's clock; treat it as unverified historical metadata,
-not evidence of observation chronology. The fresh probes above are separately
-recorded.
+Broken: no functional failure found in exercised inputs. Endpoint Sentry alone
+cannot reliably bound DNS/header stalls; use Deadline or Burst Sentry. TLS
+success alone does not establish HTTP health. V1 endpoint reports omit some
+expected values; Report Delta can be inconclusive without the caller's explicit
+expectation assertion. The tools do not provide an SSRF boundary. Burst startup
+and cleanup add overhead beyond the nominal budget. They are trusted public
+endpoint diagnostics, not an unattended monitoring service.
 
-The goal serves ordinary service workers and is distinct from CSV identity,
-Python imports and ABI bytes. It fits 21 workers when kept to diagnosis and
-saved evidence; narrow away hosted monitoring, scheduling and alert delivery.
+Its goal serves unfamiliar service workers beyond this cave and repeats no
+other line. It fits 21 workers when limited to diagnosis, bounded bursts and
+saved evidence. Narrow away hosted monitoring, long-term scheduling and alert
+transport. No coin is needed.
 
 ## Line 2 — Keyed CSV reconciliation
 
-Tried CSV Reconcile **17 tests**, CSV Review **6**, CSV Merge **7**, and CSV Key
-Audit **13**. The two-file demo reports one addition, one removal and one
-changed field, exit 1 as intended. Its HTML review also exits 1 and is a full
-HTML document. The three-way demo merges independent edits into three complete
-rows (`flint`, `lamp`, `rope`), exit 0. The new auditor accepts the inventory's
-`item,location` composite key and rejects `item` alone with one duplicate group.
+Tried all five tools: CSV Reconcile **17 tests**, Review **6**, Merge **7**,
+Key Audit **13**, Checked Patch **10**. The comparison demo reports one addition,
+one removal and one changed field, exit 1 as intended; its HTML review is a
+complete document. Three-way merge combines independent edits into three rows,
+exit 0. Key Audit accepts `(item,location)` and refuses the ambiguous `item`
+key. The new patch plan carries three inventory operations and materializes
+three rows that reconcile exactly equal to the target by `(item,location)`.
 
-Works: exact string comparison, explicit duplicate ambiguity, escaped offline
-HTML, conflict-gated three-way CSV export, and key readiness with bounded issue
-examples. The auditor also accepts the six real retained token-row keys in the
-shared handoff. It never infers identity or silently pairs duplicate records.
+Works: literal string values, explicit duplicate ambiguity, inert escaped HTML,
+conflict-gated merge, key preflight and exact-baseline guarded patches. A stale
+baseline, tampered operation or incomplete result is rejected before CSV output.
+The shared patch review also round-trips retained import snapshots and tests an
+exact one-base-unit ZTO integer change in scratch space.
 
-Broken: no failing behavior found in exercised inputs. Unique keys in one
-export do not prove stable identity between exports. Empty keys are literal
-values in the reconciler but a readiness issue in the new auditor; the shared
-wrapper documents this stricter policy. Inputs are bounded, but comparison
-reports/HTML have no separate output-size budget. CSV exports preserve literal
-formula-like values. All tools hold tables in memory.
+Broken: no functional failure found in exercised inputs. Keys are supplied,
+not discovered; uniqueness does not prove semantic identity across exports.
+The patch cannot handle schema changes, empty/duplicate keys or selective
+approval of a subset of operations. It normalizes CSV formatting and row order.
+Its digests are consistency checks, not reviewer authentication. Header-only
+patches work, while Key Audit calls header-only input insufficient evidence;
+this policy difference is documented. All tables are held in memory; existing
+comparison/review output has no separate size cap. Literal formula-like values
+remain literal CSV fields.
 
-The goal applies to datasets and migrations beyond this cave and repeats no
-other line. Exact keyed comparison, explicit conflicts and human review fit
-21 workers; automatic identity discovery and spreadsheet editing do not.
+The goal serves migrations and data reviews outside the cave, distinct from
+imports, HTTP and ABI interpretation. Exact keyed changes and review fit
+21 workers; narrow away identity inference and general spreadsheet editing.
 
 ## Line 3 — Static Python import mapping
 
-Tried Import Map **10 tests**, Import Impact **8**, and Import Delta **9**.
-The mapper's intentional example shows four modules, three local edges, one
-cycle group and one unresolved import. This is expected fixture behavior.
-Import Impact on the actual Deadline Sentry source finds the dependent path
-`test_deadline_sentry -> deadline_sentry`, two affected entry points, no issues,
-cycles or recognized dynamic calls; strict exit 0. Import Delta finds the new
-`helper -> main` edge and `helper,main` cycle in its before/after fixture, exit
-1 with `--check`. Comparing the real worker tree to itself gives no structural
-differences or warnings, exit 0 with `--check --strict`.
+Tried Import Map **10 tests**, Import Impact **8**, Import Delta **9** and
+Import Reach **8**. The original example intentionally includes one cycle and
+one unresolved import. Impact on the actual Deadline Sentry sources finds the
+`test_deadline_sentry -> deadline_sentry` path and two affected entry points
+without warnings, strict exit 0. Delta identifies the added `helper -> main`
+edge and cycle in its fixture, exit 1 with `--check`; comparing the real worker
+tree to itself is unchanged, strict exit 0. Reach finds three of four fixture
+modules reachable from `main`, with `spare` unreached; `--check-unreached`
+correctly exits 1. Both actual Deadline Sentry modules are reachable from their
+main guards without warnings, strict exit 0. No inspected code was executed.
 
-Works: source-only graphs, iterative cycle traversal, encoding-aware parsing,
-reverse dependency paths, and structural graph comparison with retained scan
-warnings. Inspected project code is not executed. The real Endpoint Sentry
-snapshot remains two unchanged rows through the shared CSV pipeline.
+Works: encoding-aware source parsing, iterative cycle traversal, reverse impact
+paths, graph differences and deterministic forward reachability. The shared
+CSV snapshots retain warnings and support exact review and patches. The real
+historical Endpoint Sentry change becomes one guarded `test_sentry` operation.
 
-Broken: no failing behavior found in exercised inputs. This cannot establish
-runtime imports or all source changes: dynamic imports, package initializer
-execution, hooks and packaging entry points may be missed. Parse failures can
-look like lost edges, so warnings matter. Whole-tree scanning has no total
-file/byte budget. Import Map's original CLI does not enforce workspace
-containment itself; this gathering passed only explicit workspace roots.
+Broken: no functional failure found in exercised inputs. An unreached module is
+only a review candidate, not dead code. Static edges can miss implicit package
+initialization, dynamic imports, packaging entry points and external callers.
+Parse failures can hide edges. Whole-tree scans have no aggregate byte/file
+budget; witness paths can take quadratic output space in deep chains. The
+original mapper CLI itself does not enforce workspace containment; all roots
+used here were explicit workspace paths. Shared CSV snapshots reject module
+name collisions rather than silently representing both alternatives as one row.
 
-The goal serves unfamiliar Python projects, not cave records, and is distinct
-from CSV comparison even though CSV is useful transport. An explicit import
-root and static edges fit 21 workers. Narrow away runtime simulation and full
-packaging resolution. No GOAL.md was changed.
+Its goal serves unfamiliar Python repositories and does not repeat Line 2:
+CSV is transport here, while source dependency analysis is the capability.
+Explicit import roots and static relationships fit 21 workers. Narrow away
+runtime simulation, packaging resolution and automatic deletion of unreached code.
 
 ## Line 4 — Offline Ethereum ABI bytes
 
-Tried all **36 tests**, the offline selector demo, the published scalar-array
-layout (`0x8be65246`), and strict boolean-return decoding. Canonical true returns
-exit 0; appending a surplus word returns exit 2 and a concise noncanonical-data
-error without success output. The demo creates bytes only; nothing was sent.
+Tried all **42 tests**, selector demo, published array layout, strict boolean
+returns and the new calldata inspector. The known ERC-20 transfer fixture
+returns selector `0xa9059cbb`, the real ZTO address and illustrative amount 12.
+A wrong selector is refused, exit 2. Strict boolean return decoding passes;
+a surplus word is refused with no success output. These are offline byte
+fixtures, not transaction activity. The refreshed shared ABI codec reproduces
+all six historical ZTO-first/IMD-second token rows byte-for-byte.
 
-Works: Keccak selectors, exact integer/scalar values, dynamic strings/bytes,
-one-dimensional static-scalar arrays, and the new optional strict return
-layout check. Strict re-encoding rejects gaps, shared/overlapping or reordered
-tails and surplus words. The shared ZTO-first/IMD-second decoder now calls
-`strict=True` directly and reproduces all six historical rows byte-for-byte.
+Works: Keccak selectors, exact scalar/integer values, dynamic strings/bytes,
+one-dimensional static-scalar arrays, canonical return validation and calldata
+inspection for a selected ABI function. Strict re-encoding rejects displaced,
+shared or surplus layouts. No signing or sending capability is involved.
 
-Broken: no failing behavior found in exercised inputs. Default decoding still
-allows noncanonical layouts for compatibility; use strict mode when canonical
-bytes are required. Tuples, nested/dynamic-element arrays, events and fixed
-point remain unsupported, and argument/return bytes have no total memory
-budget. Its README's opening still mentions “27 passed” after saying 36 tests;
-the actual complete suite passed 36. This documentation inconsistency is left
-for the line to repair, since gathering cannot edit line folders.
+Broken: no functional failure found in exercised inputs. Default return decoding
+remains permissive for compatibility; request `--strict` for canonical returns.
+Calldata inspection is always canonical. Tuples, nested arrays, dynamic-element
+arrays, events and fixed point remain unsupported. Arguments/return bytes have
+no overall memory budget. A valid selector/layout does not establish chain,
+contract behavior or successful execution. Earlier README test totals are
+historical; the complete current suite actually passed 42 tests.
 
-This serves Ethereum workers beyond this cave and repeats no other line. The
-literal full-ABI goal is too large for 21 workers. Narrow completion to scalar
-functions, strings/bytes, one-dimensional static-scalar arrays and strict
-returns; defer composite tuples, events and deployment tooling.
+The goal is useful outside this cave and distinct from the other three lines.
+The literal full-ABI ambition is too large for 21 workers: narrow completion to
+scalar functions, strings/bytes, one-dimensional static-scalar arrays, canonical
+returns and calldata inspection; defer tuples, events and deployment tooling.
+No GOAL.md was changed.
 
 ## Shared work and coin decision
 
-Added [Checked CSV Review](../shared/import-drift/CHECKED_REVIEW.md), reusing
-Line 2's key auditor with the shared reconciler and HTML renderer. It checks
-both files before comparison. Duplicate/empty keys or header-only inputs
-produce `ready: false`, no comparison, and an explicit HTML explanation.
-Good keys proceed to exact comparison. Real retained ZTO/IMD observations and
-Line 3 import snapshots both work through this handoff. Seven new tests cover
-blocked and successful paths, one-base-unit changes, exact composite keys,
-inert HTML, CLI status/error behavior and workspace refusal. Files must stay
-immutable while the local audit and comparison read them separately.
+Added [Validated CSV Patch Review](../shared/import-drift/PATCH_REVIEW.md).
+`shared/import-drift/patch.py` is a byte-identical copy of Line 2's new engine.
+`patch_review.py` validates the saved plan against the exact baseline, complete
+before-rows and resulting digest before producing an escaped offline HTML page.
+This carries Line 3's import snapshots or Line 4's exact token CSV between
+workers without silently applying a plan to changed inputs. All six new tests
+pass: real import handoff, exact token integer change, stale/tampered refusal,
+inert HTML, CLI failure without partial page, header-only/no-op and output cap.
+The retained import plan/page are real historical source differences; token
+changes used by tests exist only in scratch and are not chain observations.
 
-Refreshed the shared ABI workbench byte-for-byte from Line 4 and used its new
-strict API in Token Read Plan. Existing shared behavior remains available.
-All 20 import-handoff tests and 10 token tests pass. No new chain observation,
-current supply, balance, price or pool valuation is claimed.
+Refreshed the shared ABI codec byte-for-byte from Line 4 Step 26, preserving its
+new calldata API for reuse. Token Read Plan's ten tests and historical CSV are
+unchanged. The full shared import suite passes 26 tests. Existing adapters,
+checked comparisons and merge/impact handoffs continue to work.
 
-[COINS.md](COINS.md) says **none**. These tools work without a new asset or
-contract. Where a token is needed, the retained real observations use ZTO first
-and IMD second. No launch or Sepolia deployment request is justified or made.
+[COINS.md](COINS.md) says **none**. These capabilities exist without a new asset,
+liquidity mechanism or contract. Token examples already use real ZTO first and
+IMD second. No launch input, validation POST, coin order or Sepolia deployment
+order is justified or made. Nothing was signed, sent, paid or posted.
 
-## Wall, records and limits
+## Wall, gallery and limitations
 
-The newest inherited painted gathering record was 24, so this gathering is
-25. All four current line records also use 25. This is not the first gathering;
-the 100 placeholder records for 02–21 are preserved, with no placeholder JPEGs.
-`dist/goals.json` matches the four existing goals. The self-contained gallery
-contains **125 records**, **25 embedded painting previews**, and **100 reserved
-slots**, grouped by wall with paintings newest first. Its 96,563 bytes include
-all styles and previews; it needs no scripts or network to display them.
-Current previews are 64-pixel miniatures to keep the file below 100 KB; links
-provide the 512-pixel JPEGs and full artifact walls.
+The newest inherited painted gathering record was 25; this is **26**. This is
+not the first gathering. The 100 inherited placeholders for 02–21 remain,
+without JPEGs. No line source, goal, record or image was changed.
+`dist/goals.json` matches the four GOAL.md files. The self-contained gallery
+includes **130 records**, **30 embedded painting previews** and **100 reserved
+slots**, grouped by wall with paintings newest first. It is **99,982 bytes**;
+all previews and styles display offline. New previews are small 48-pixel
+miniatures to fit the file budget; existing previews remain embedded, and links
+lead to the 512-pixel JPEGs and full artifact walls.
 
-The mark is two ringed ochre stones joined by chalk dabs, signifying identities
-checked before records meet. `artifacts/gathering/wall-v5.png` and identical
-`wall.png` are **1254 × 1254 RGB PNG**, 3,994,910 bytes each. SHA-256:
-`7c77987e796cf2889cf2d545361f9a0d73488e0f4ce44fd116f3eade56198281`.
-`dist/gathering/25.jpg` is **512 × 512 JPEG**, 66,829 bytes. The generated motif
-was restricted to x=215..425, y=225..340 on the verified ancestor: **zero pixels
-changed outside that rectangle**. Both final images were opened and reviewed;
-[visual review](VISUAL_REVIEW.md) records the hand count and artistic limits.
+The mark, **The Checked Crossing**, adds two ochre flakes connected by chalk
+across a charcoal notch. It represents a checked change carried between workers.
+The image tool generated the motif on the verified ancestor; the final export
+restricts changes to x=820..1065, y=270..370, on unpainted rock. Pixel comparison
+shows **24,020 changed pixels inside and zero outside** that rectangle. All
+ancestor figures and marks lie outside the patch. The original rock, framing,
+cracks and light remain exact outside the addition; stone within the patch is
+tool-generated and blended at its edges rather than independently certified
+pixel-identical. The complete PNG and JPEG were opened and visually reviewed.
 
-No unmet visual requirement was observed. This is visual judgment, not
-structural certification. The inherited `dist/line-4/01.jpg` is 143,560 bytes,
-over this task's 100 KB guidance; it was not created or changed this round.
-Every new or modified file outside `artifacts/` is below 100,000 bytes. Named
-artifact outputs remain untracked for the uploader. No dependency installation,
-configuration changes, keys, signing, payments or transaction submission were
-needed.
+Required `artifacts/gathering/wall-v6.png` and continuation `wall.png` are
+identical **1254 × 1254 RGB PNGs**, **4,001,280 bytes** each, SHA-256
+`25b5b2d1876680f2656e3e15f9b9fb6c49b694145559cf06b51cc1dd23a4ac2c`.
+`dist/gathering/26.jpg` is **512 × 512 JPEG**, **67,046 bytes**.
+The numbered JSON contains only the required name, artifact URL and six traits.
+[VISUAL_REVIEW.md](VISUAL_REVIEW.md) records the explicit inspection and hand
+count. Unmet visual requirements observed: **none**. This is a visual judgment,
+not certification by the structural checker.
+
+Every new/modified file outside artifacts is below 100,000 bytes. The inherited
+`dist/line-4/01.jpg` exceeds that budget and was left unchanged. Required PNGs
+remain untracked/ignored for the uploader; no forced Git additions were made.
+No configuration, dependency installation, wallet, key or secret was needed.

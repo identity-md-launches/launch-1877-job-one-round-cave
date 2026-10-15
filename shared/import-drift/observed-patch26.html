@@ -1,0 +1,23 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
+<title>Validated CSV patch</title><style>body{font:16px/1.5 system-ui;margin:2rem;max-width:100ch}pre{white-space:pre-wrap;overflow-wrap:anywhere}section{border-top:1px solid #888;padding:1rem 0}dt{font-weight:bold}dd{margin:0 0 1rem;overflow-wrap:anywhere}</style></head><body>
+<h1>Validated CSV patch</h1><p>The supplied baseline and complete result match the saved patch fingerprints. This page prepares no files and sends nothing.</p><dl><dt>Baseline SHA-256</dt><dd>ab697d029f9fcf123e5b959fbe3deebf6dfcdfc23c43b4df04bdc1d88ff9b812</dd><dt>Result SHA-256</dt><dd>d95dc5aa82de2d965e3ec7b2d430f11aabfcf58dd1a5a41f66b55f35ae644276</dd><dt>Key columns</dt><dd>[&quot;module&quot;]</dd><dt>Operations</dt><dd>1</dd><dt>Result bytes</dt><dd>418</dd></dl><p>Fingerprints detect stale or inconsistent content; they do not authenticate a reviewer. Apply the same saved JSON against the same baseline after review. Values are literal strings.</p><section><h2>Change · 1</h2><h3>Before</h3><pre>{
+  &quot;module&quot;: &quot;test_sentry&quot;,
+  &quot;path&quot;: &quot;test_sentry.py&quot;,
+  &quot;entrypoint&quot;: &quot;true&quot;,
+  &quot;local_imports&quot;: &quot;[\&quot;sentry\&quot;]&quot;,
+  &quot;external_imports&quot;: &quot;[\&quot;contextlib\&quot;,\&quot;io\&quot;,\&quot;json\&quot;,\&quot;socket\&quot;,\&quot;ssl\&quot;,\&quot;unittest\&quot;]&quot;,
+  &quot;unresolved_imports&quot;: &quot;[]&quot;,
+  &quot;dynamic_import_lines&quot;: &quot;[]&quot;,
+  &quot;parse_errors&quot;: &quot;[]&quot;
+}</pre><h3>After</h3><pre>{
+  &quot;module&quot;: &quot;test_sentry&quot;,
+  &quot;path&quot;: &quot;test_sentry.py&quot;,
+  &quot;entrypoint&quot;: &quot;true&quot;,
+  &quot;local_imports&quot;: &quot;[\&quot;sentry\&quot;]&quot;,
+  &quot;external_imports&quot;: &quot;[\&quot;contextlib\&quot;,\&quot;io\&quot;,\&quot;json\&quot;,\&quot;socket\&quot;,\&quot;ssl\&quot;,\&quot;unittest\&quot;,\&quot;unittest import mock\&quot;]&quot;,
+  &quot;unresolved_imports&quot;: &quot;[]&quot;,
+  &quot;dynamic_import_lines&quot;: &quot;[]&quot;,
+  &quot;parse_errors&quot;: &quot;[]&quot;
+}</pre></section></body></html>

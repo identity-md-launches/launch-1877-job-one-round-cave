@@ -154,3 +154,13 @@ prove that an entry point will execute.
 withhold comparisons when keys are duplicate, empty, or lack data evidence.
 It accepts both this folder's import snapshots and the ZTO/IMD CSV emitted by
 the shared token adapter. Seven new handoff tests pass; the full suite has 20.
+
+## Gathering 26: carry a reviewed exact change
+
+[Validated CSV Patch Review](PATCH_REVIEW.md) shares Line 2's unchanged guarded
+patch engine. Saved plans can carry an import snapshot change or token CSV
+change to another worker while pinning exact baseline and result fingerprints.
+The new renderer validates the complete patch before displaying inert HTML.
+Stale baselines and altered operations are refused without a partial page.
+Six new tests pass; this shared folder now has 26 passing tests. The retained
+real import change and a scratch-only exact token integer change both work.

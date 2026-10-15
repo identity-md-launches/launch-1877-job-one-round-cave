@@ -1,41 +1,40 @@
-# Gathering 25 — The Two Checked Stones
+# Gathering 26 — The Checked Crossing
 
-All 149 line tests, 30 shared tests and 21 offline demonstrations passed.
-Three real swarm HTTP/TLS probes also passed. [REPORT.md](REPORT.md) covers
-what each line can do, tested failures, remaining limits and the 21-worker
-scope. [COINS.md](COINS.md) says none: no new asset or deployment is needed.
+All 183 line tests, 36 shared tests and 31 offline demonstrations passed.
+Four public swarm diagnostic invocations also passed, including three burst
+samples. [REPORT.md](REPORT.md) covers each line, limitations and recommended
+21-worker scope. [COINS.md](COINS.md) says none: the work needs no new asset.
 
-The new [Checked CSV Review](../shared/import-drift/CHECKED_REVIEW.md) combines
-Line 2's key audit with exact comparison and offline HTML. It refuses to compare
-ambiguous, empty or untested keys. Try the real retained ZTO-first/IMD-second
-observation, entirely offline:
+The new [Validated CSV Patch Review](../shared/import-drift/PATCH_REVIEW.md)
+shares Line 2's exact-baseline patch engine with Line 3 import snapshots and
+Line 4 token CSVs. It refuses stale or inconsistent plans before rendering
+escaped, self-contained HTML. One offline command shows the retained real
+Endpoint Sentry import change:
 
 ```sh
-python3 -B shared/import-drift/checked_review.py shared/token-read-plan/observed.csv shared/token-read-plan/observed.csv --key chain_id --key token_address --key field
+python3 -B shared/import-drift/patch_review.py shared/import-drift/observed-sentry.csv shared/import-drift/observed-patch26.json
 ```
 
-Observed exit 0: six unique nonempty keys per file and six unchanged rows.
-The same wrapper accepts Line 3 import snapshots with `--key module`. Seven
-new behavioral tests cover key refusal, exact values, inert HTML and errors.
-Token Read Plan now uses Line 4's canonical `strict=True` decoder, with all ten
-regressions passing and its historical CSV unchanged. No current-chain values
-are asserted.
+Observed exit 0: one changed `test_sentry` row and validated baseline/result
+fingerprints. No Python source is executed or changed. Six new tests cover
+real import and token handoffs, stale/tampered inputs and HTML/error behavior.
+The shared ABI codec also now matches Line 4 Step 26 byte-for-byte; historical
+ZTO-first/IMD-second CSV output remains unchanged.
 
-Open [the offline gallery](../dist/index.html): 125 records, 25 embedded previews
-and 100 inherited reserved slots. All preview bytes and styles are in that
-single 96,563-byte file. Paintings are newest first within each wall. Full-wall
-links point to the artifact service. Current small previews trade detail for
-the file-size budget; the 512-pixel JPEG links provide larger images.
+[The offline gallery](../dist/index.html) contains 130 records, 30 embedded
+painting previews and 100 inherited placeholder slots. All styles/previews are
+in the single 99,982-byte page. Previews are intentionally small; each painting
+links to its 512-pixel JPEG and full artifact wall. All four goals are retained.
 
-The mark adds two ringed pigment stones joined by chalk dabs: check identities
-before bringing records together. The PNG at `artifacts/gathering/wall-v5.png`
-is 1254 × 1254, identical to the working `wall.png`. Its [record](../dist/gathering/25.json)
-and [512-pixel JPEG](../dist/gathering/25.jpg) accompany it. All pixels outside
-the small addition rectangle are identical to the verified ancestor. The
-[visual review](VISUAL_REVIEW.md) records dimensions, format, hand count,
-preservation evidence and visual limitations. Both final images were inspected.
+The wall adds two ochre flakes joined across a charcoal notch, representing a
+checked change carried between workers. Required `artifacts/gathering/wall-v6.png`
+and continuation `wall.png` are identical 1254 × 1254 RGB PNGs. Its
+[record](../dist/gathering/26.json) and [512-pixel JPEG](../dist/gathering/26.jpg)
+are present. [Visual review](VISUAL_REVIEW.md) records five digits on each
+inherited visible hand and no observed unmet requirements. Zero pixels outside
+the small addition rectangle changed. Final PNG and JPEG were opened.
 
-Reproduce the offline suites and demonstrations from the repository root:
+Reproduce checks from the repository root, using Python's standard library:
 
 ```sh
 python3 -B gathering/run_checks.py
@@ -43,22 +42,15 @@ python3 -B gathering/try_tools.py
 python3 -B gathering/check_delivery.py
 ```
 
-The suite runner copies source and fixtures into authorized scratch space to
-avoid changing line folders. The demonstration runner uses saved live reports
-and retained Ethereum observations; it does not contact the network. These
-runners write local evidence JSON under `gathering/`. The structural checker
-validates image bytes, record traits/hash, goals, gallery, preserved placeholders
-and reused source, but cannot certify art or real-chain truth.
+The suite runner checks byte-identical scratch copies to preserve line folders.
+The demonstration runner uses saved observations and writes evidence locally;
+it makes no network requests. The checker validates structure, not art quality
+or external truth. Rebuild the gallery with `python3 -B gathering/build_gallery.py`;
+missing current previews use the supplied workspace PNGs. Node and the included
+JPEG encoder are needed for those preview conversions; no package download.
+`finish_wall.js` is a one-time export that requires the verified round-25
+ancestor and refuses to run again on the completed wall.
 
-Rebuild the gallery with `python3 -B gathering/build_gallery.py`. Python standard
-library plus the installed Node runtime and the included JPEG encoder suffice;
-no downloads or package installation. The generator preserves historical
-embedded previews and derives missing current miniatures from supplied PNGs.
-`finish_wall.js` is the one-time artwork export step and deliberately refuses
-an input that is no longer the verified round-24 ancestor; do not rerun it on
-the completed wall. It is not needed to view or verify delivered files.
-
-No line folder or configuration was changed. Every new/modified file outside
-`artifacts/` is under 100 KB. The inherited oversized Line 4 record-01 JPEG is
-preserved and disclosed in the report. Required artifact PNGs are left
-untracked for the uploader.
+No line folder or configuration was modified. All new/modified files outside
+artifacts are below 100 KB. The inherited oversized Line 4 record-01 JPEG is
+unchanged. Required artifact PNGs remain untracked/ignored for upload.

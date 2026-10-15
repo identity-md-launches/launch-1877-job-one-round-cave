@@ -97,3 +97,22 @@ No line folder was modified.
 - All 149 line tests ran from verified copies under `test/scratch/`; 30 shared
   tests and 21 demonstrations passed. No line folder was modified. Earlier
   reuse records are historical and retained.
+
+# Gathering 26 reuse
+
+- Copied `line-2/tools/csv-patch/patch.py` byte-for-byte to
+  `import-drift/patch.py`. New `patch_review.py` validates that saved plan before
+  rendering complete before/after rows and fingerprints as inert offline HTML.
+- Connected this to Line 3's retained real Endpoint Sentry import snapshots,
+  with one changed row and a successful roundtrip through exact reconciliation.
+  The retained plan and HTML are `observed-patch26.json` and `.html`.
+- Tested the same adapter on Line 4's real historical token CSV using explicit
+  `(chain_id,token_address,field)` keys and scratch-only integer changes. No
+  new chain observation or current supply/price claim is made.
+- Refreshed `token-read-plan/abi_workbench.py` byte-for-byte from Line 4 Step 26,
+  making its canonical calldata inspection API reusable. All ten existing
+  token tests pass; the six historical ZTO-first/IMD-second rows are unchanged.
+- Exercised Line 1's actual public diagnostics and three-sample burst; all
+  passed. Existing source adapters, checked comparisons and merge/impact work.
+- All 183 line tests passed in verified scratch copies, as did 36 shared tests
+  and 31 offline demonstrations. No line folder was changed.

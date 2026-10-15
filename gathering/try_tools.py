@@ -10,7 +10,7 @@ import subprocess
 
 
 def main():
-    scratch = Path('test/scratch/gathering25')
+    scratch = Path('test/scratch/gathering26')
     scratch.mkdir(parents=True, exist_ok=True)
     results = []
 
@@ -37,7 +37,7 @@ def main():
     probes = json.loads(Path('gathering/live-probes25.json').read_text())
     for name, index in [('before', 0), ('after', 1)]:
         (scratch / (name + '.json')).write_text(json.dumps(probes[index]['stdout']))
-    run('Report Delta current observations', 'line-1/tools/report-delta/report_delta.py',
+    run('Report Delta retained gathering25 observations', 'line-1/tools/report-delta/report_delta.py',
         [str(scratch / 'before.json'), str(scratch / 'after.json'), '--same-expectations'])
     run('CSV key audit composite key', 'line-2/tools/csv-key-audit/audit.py',
         ['line-2/tools/csv-key-audit/demo.csv', '--key', 'item', '--key', 'location'])
@@ -74,9 +74,43 @@ def main():
         ['shared/import-drift/observed-sentry23.csv', str(scratch / 'sentry.csv'), '--key', 'module'])
     run('Import merge and impact handoff', 'shared/import-drift/handoff.py',
         ['shared/import-drift/observed-sentry23.csv'] * 3 + ['line-1/tools/endpoint-sentry'])
+    run('Import Reach fixture', 'line-3/tools/import-reach/reach.py',
+        ['line-3/tools/import-reach/examples', '--json', '--check-unreached'], 1)
+    run('Import Reach real worker', 'line-3/tools/import-reach/reach.py',
+        ['line-1/tools/deadline-sentry', '--json', '--strict'])
+    calldata = '0xa9059cbb' + '0' * 24 + 'd782bdea4ef02a0bd391eb9089470c8080f0a68e' + '0' * 63 + 'c'
+    run('ABI inspect canonical calldata', abi, ['decode-call', '--abi',
+        'line-4/tools/abi-workbench/alias-example.json', '--function', 'transfer', '--data', calldata])
+    run('ABI rejects wrong calldata selector', abi, ['decode-call', '--abi',
+        'line-4/tools/abi-workbench/alias-example.json', '--function', 'transfer', '--data', '0x00000000' + calldata[10:]], 2)
+    patcher = 'line-2/tools/csv-patch/patch.py'
+    plan = run('CSV reviewed inventory patch', patcher, ['plan',
+        'line-2/tools/csv-reconcile/demo-before.csv', 'line-2/tools/csv-reconcile/demo-after.csv',
+        '--key', 'item', '--key', 'location'])
+    plan_path = scratch / 'inventory-plan.json'
+    plan_path.write_text(plan)
+    applied = run('CSV apply inventory patch', patcher, ['apply',
+        'line-2/tools/csv-reconcile/demo-before.csv', str(plan_path)])
+    applied_path = scratch / 'inventory.csv'
+    applied_path.write_text(applied)
+    run('CSV applied inventory matches target', 'line-2/tools/csv-reconcile/reconcile.py',
+        [str(applied_path), 'line-2/tools/csv-reconcile/demo-after.csv', '--key', 'item', '--key', 'location'])
+    import_base = 'shared/import-drift/observed-sentry.csv'
+    import_plan = run('Shared guarded import patch', 'shared/import-drift/patch.py', ['plan',
+        import_base, 'shared/import-drift/observed-sentry23.csv', '--key', 'module'])
+    import_path = scratch / 'import-plan.json'
+    import_path.write_text(import_plan)
+    review = run('Shared validated patch HTML', 'shared/import-drift/patch_review.py',
+        [import_base, str(import_path)], html=True)
+    Path('shared/import-drift/observed-patch26.json').write_text(import_plan)
+    Path('shared/import-drift/observed-patch26.html').write_text(review)
+    stale = scratch / 'stale.csv'
+    stale.write_bytes(Path(import_base).read_bytes().replace(b'\n', b'\r\n'))
+    run('Shared review refuses stale baseline', 'shared/import-drift/patch_review.py',
+        [str(stale), str(import_path)], 2)
     report = {'ok': all(item['passed'] for item in results), 'results': results,
               'token_historical_csv_byte_identical': True}
-    Path('gathering/integration-checks25.json').write_text(json.dumps(report, indent=2) + '\n')
+    Path('gathering/integration-checks26.json').write_text(json.dumps(report, indent=2) + '\n')
     print(json.dumps({'ok': report['ok'], 'checks': len(results),
                       'failed': [r['name'] for r in results if not r['passed']]}, indent=2))
     return 0 if report['ok'] else 1

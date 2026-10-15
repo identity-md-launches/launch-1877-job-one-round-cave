@@ -1,0 +1,42 @@
+{
+  "format": "csv-patch/v1",
+  "keys": [
+    "module"
+  ],
+  "header": [
+    "module",
+    "path",
+    "entrypoint",
+    "local_imports",
+    "external_imports",
+    "unresolved_imports",
+    "dynamic_import_lines",
+    "parse_errors"
+  ],
+  "baseline_sha256": "ab697d029f9fcf123e5b959fbe3deebf6dfcdfc23c43b4df04bdc1d88ff9b812",
+  "result_sha256": "d95dc5aa82de2d965e3ec7b2d430f11aabfcf58dd1a5a41f66b55f35ae644276",
+  "operations": [
+    {
+      "before": {
+        "module": "test_sentry",
+        "path": "test_sentry.py",
+        "entrypoint": "true",
+        "local_imports": "[\"sentry\"]",
+        "external_imports": "[\"contextlib\",\"io\",\"json\",\"socket\",\"ssl\",\"unittest\"]",
+        "unresolved_imports": "[]",
+        "dynamic_import_lines": "[]",
+        "parse_errors": "[]"
+      },
+      "after": {
+        "module": "test_sentry",
+        "path": "test_sentry.py",
+        "entrypoint": "true",
+        "local_imports": "[\"sentry\"]",
+        "external_imports": "[\"contextlib\",\"io\",\"json\",\"socket\",\"ssl\",\"unittest\",\"unittest import mock\"]",
+        "unresolved_imports": "[]",
+        "dynamic_import_lines": "[]",
+        "parse_errors": "[]"
+      }
+    }
+  ]
+}
