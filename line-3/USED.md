@@ -66,3 +66,18 @@ pixels outside x=330..464, y=1120..1224 changed. Existing Pepe, both five-digit
 hands, every prior mark and the rest of the cave remain identical. Pillow was
 used only for artifact preservation, preview encoding and verification; it is
 not a dependency of the delivered standard-library tool. No packages installed.
+
+Step 26 reused `tools/import-map/import_map.py` unchanged to add Import Reach,
+a standard-library forward traversal from detected or explicitly chosen entry
+points. Read the gathering report first; it reported no broken line-3 behavior.
+A four-module example, eight tests, and a source-only scan of the real Deadline
+Sentry tool verified the new piece. No coin, payment, pool, wallet or chain
+access is involved in this offline source-analysis task.
+
+Recovered record 25's wall from its public artifact URL with a dedicated
+User-Agent and verified the downloaded bytes. Used the built-in image editing
+tool to paint the new small reachability mark, then retained only its patch on
+unused upper-left stone. Scratch-only Node code reused the already delivered
+gathering PNG/JPEG decoder and encoder; no dependency was installed or copied.
+The PNG and JPEG dimensions, byte hashes and pixel preservation are recorded
+in `STEP-26-REVIEW.md`.
