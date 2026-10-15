@@ -13,11 +13,11 @@ From the repository root:
 python3 -B -m unittest discover -s line-4/tools/abi-workbench -v
 ```
 
-This runs 36 regression tests, including the gathering's defect reports,
+This runs 42 regression tests, including the gathering's defect reports,
 all 32 integer widths, malformed output checks, and eight Keccak vectors
 independently obtained using `cast keccak` (Cast is not needed to run the tests).
-All 27 passed locally, including 11 input-boundary tests and four scalar-array
-tests. The original demo also passed:
+All 42 passed locally, including input-boundary, scalar-array, strict-return,
+and calldata-inspection tests. The original demo also passed:
 
 ```sh
 python3 -B line-4/tools/abi-workbench/abi_workbench.py --demo
@@ -125,3 +125,25 @@ Strict decoding validates byte layout for the supported type subset; it does
 not authenticate the source of those bytes. It holds decoded values and a
 second encoded copy in memory. Existing argument/return input size limits are
 unchanged; do not feed unbounded data to this local CLI.
+
+## Calldata inspection (Pepe 26)
+
+`decode-call` reads supplied calldata for one function in a local ABI. It
+checks the four-byte selector, decodes the supported arguments, and requires
+canonical ABI layout: no gaps, shared tails or extra words. It only interprets
+bytes already provided to it. It does not query a chain or send the call.
+
+From the repository root, this one command decodes a known `transfer` byte
+fixture containing the real ZTO address and an illustrative amount of 12:
+
+```sh
+python3 -B line-4/tools/abi-workbench/abi_workbench.py decode-call --abi line-4/tools/abi-workbench/alias-example.json --function transfer --data 0xa9059cbb000000000000000000000000d782bdea4ef02a0bd391eb9089470c8080f0a68e000000000000000000000000000000000000000000000000000000000000000c
+```
+
+Tried locally: exit 0, selector `0xa9059cbb`, recipient
+`0xd782bdea4ef02a0bd391eb9089470c8080f0a68e`, amount 12. Six new tests
+cover this independently known ERC-20 selector, malformed selectors,
+truncation, surplus words and a displaced dynamic tail. The full 42-test suite
+passes. A valid selector and canonical bytes do not prove that a transaction
+was signed, sent, executed or successful. The supported ABI type subset and
+unbounded calldata memory limitation above also apply here.

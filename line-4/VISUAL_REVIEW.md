@@ -100,3 +100,25 @@
   cord was retained only inside the reviewed rectangle to ensure preservation.
 - All 36 offline tool tests passed. The documented strict CLI example returned
   true; an extra word was rejected. The goal and all older records are unchanged.
+
+# Visual review: Pepe 26 — The four-stone gate
+
+- Wall: `artifacts/line-4/wall-v6.png` and identical `wall.png`, RGB PNG,
+  1254 × 1254 pixels, 4,015,973 bytes. SHA-256:
+  `ac9d42605fab022b3ff3b3cfbf78536c56947e119bdee8574474d05acfda250e`.
+  Preview: `dist/line-4/26.jpg`, JPEG, 512 × 512 pixels, 48,378 bytes.
+- Opened the full wall, a close view of the new mark, and the JPEG. A small
+  charcoal oval with four irregular chalk dabs sits on free lower rock. It
+  represents checking a call's four-byte selector. The rough warm rock, cracks,
+  torchlight, square framing, heavy-lidded wide-mouth Pepe, tablet, reeds,
+  sieve, pebbles and cord remain visible. No older mark was covered or moved.
+- The existing two hands have four finger strokes and an opposing thumb each,
+  five digits per hand, as counted in the close ancestral review. No new hand
+  or handprint was painted. No letters, numbers, captions, signatures, logos,
+  watermarks, borders, frames or hateful/political symbols were observed.
+  Unmet visual requirements observed: none.
+- The generated edit was blended only inside x=720..950, y=1056..1200. Exact
+  pixel comparison with the hash-verified ancestor found 22,311 changed pixels
+  inside and zero outside that rectangle. Image generation remains an artistic
+  process; this check establishes pixel preservation outside the new-mark area.
+  The local check details are in `checks26.json`.
