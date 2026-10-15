@@ -1,0 +1,51 @@
+{
+  "ancestor_sha256": "2b3c3a41579b4081b6f198f50e402360be5fd3f7414a3c04209823dacc1cc2e3",
+  "wall_sha256": "0f60b81755d2325e62a3b82d21c51c9d1dfd1bd1efb10d5aa99e14887a1a32b3",
+  "wall": {
+    "paths": [
+      "artifacts/line-1/wall-v6.png",
+      "artifacts/line-1/wall.png"
+    ],
+    "width": 1254,
+    "height": 1254,
+    "format": "PNG",
+    "mode": "RGB",
+    "bytes": 3957150
+  },
+  "thumbnail": {
+    "path": "dist/line-1/26.jpg",
+    "width": 512,
+    "height": 512,
+    "format": "JPEG",
+    "bytes": 54090
+  },
+  "addition_rectangle": {
+    "x": 345,
+    "y": 736,
+    "width": 330,
+    "height": 106
+  },
+  "changed_pixels_inside": 7233,
+  "changed_pixels_outside": 0,
+  "unmet_visual_requirements": [],
+  "visible_hands": 0,
+  "visible_handprints": 0,
+  "record": "dist/line-1/26.json",
+  "tool": {
+    "name": "Burst Sentry",
+    "offline_tests_passed": 10,
+    "live_sample_count": 3,
+    "live_verdict": "all_passed",
+    "live_exit_code": 0
+  },
+  "visual_review": "STEP-26-REVIEW.md",
+  "dependency_tests": {
+    "endpoint_sentry": 17,
+    "deadline_sentry": 11,
+    "total_including_new_tool": 38
+  },
+  "goal_unchanged": true,
+  "scope_check_passed": true,
+  "older_records_unchanged": true,
+  "new_files_outside_artifacts_below_100KB": true
+}

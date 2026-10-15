@@ -69,3 +69,19 @@
   512-pixel JPEG. Pillow is not a delivered tool runtime dependency.
 - No coin, balance, price, wallet, signing, transaction, payment or post was
   needed. No new dependency or deployment was introduced.
+
+# Used by step 26
+
+- Read the unchanged goal, Gathering report, existing probe/supervisor source,
+  and prior record/review. Gathering reported no broken Line 1 behavior.
+- Reused Endpoint Sentry validation and Deadline Sentry supervision in the new
+  standard-library Burst Sentry. Three bounded anonymous public GETs to the real
+  swarm launches endpoint passed, using the inherited dedicated User-Agent.
+  No response bodies are retained. No coin or new runtime dependency is needed.
+- Recovered record 25's wall from its artifact URL and verified the SHA-256.
+  Used the installed image generation tool for the new Pepe and three fires;
+  used local FFmpeg and standard-library pigment compositing to preserve all
+  pixels outside the addition rectangle. See STEP-26-REVIEW.md for the prompt,
+  visual review and output dimensions. All ancestors remain intact.
+- No environment inspection, secret, key, wallet, signing, transaction, payment,
+  posting or deployment was used. No older tool or numbered record changed.

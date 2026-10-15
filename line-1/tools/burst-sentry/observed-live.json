@@ -1,0 +1,199 @@
+{
+  "command": [
+    "-B",
+    "line-1/tools/burst-sentry/burst_sentry.py",
+    "https://api.imd.fun/launches",
+    "--samples",
+    "3",
+    "--budget",
+    "10",
+    "--per-probe",
+    "3",
+    "--timeout",
+    "2",
+    "--json",
+    "--expect-path",
+    "/launches/0/status"
+  ],
+  "exit_code": 0,
+  "report": {
+    "schema": "burst-sentry/v1",
+    "checked_at": "2026-10-15T18:02:40.605737+00:00",
+    "ok": true,
+    "expectations": {
+      "url": "https://api.imd.fun/launches",
+      "status": 200,
+      "json": true,
+      "path": "/launches/0/status",
+      "compare_value": false,
+      "value": null,
+      "timeout_seconds": 2.0,
+      "max_bytes": 262144,
+      "max_redirects": 3
+    },
+    "limits": {
+      "samples": 3,
+      "total_seconds": 10.0,
+      "per_probe_seconds": 3.0
+    },
+    "elapsed_ms": 735.497,
+    "stop_reason": "requested_count_reached",
+    "summary": {
+      "verdict": "all_passed",
+      "complete": true,
+      "requested": 3,
+      "attempted": 3,
+      "passed": 3,
+      "failed": 0,
+      "not_attempted": 0,
+      "health_transitions": 0,
+      "last_hop_status_counts": {
+        "200": 3
+      },
+      "failure_kind_counts": {}
+    },
+    "samples": [
+      {
+        "ok": true,
+        "probe": {
+          "schema": "endpoint-sentry/v1",
+          "url": "https://api.imd.fun/launches",
+          "checked_at": "2026-10-15T18:02:39.911383+00:00",
+          "ok": true,
+          "hops": [
+            {
+              "url": "https://api.imd.fun/launches",
+              "status": 200,
+              "headers_ms": 131.493,
+              "content_type": "application/json; charset=utf-8",
+              "content_encoding": "identity",
+              "body_bytes": 125968,
+              "body_sha256": "5ec0acb0fd0b0f0dceb68f8cf55b3ec6e399dcaf3fa928e3b1d35479724f85c4"
+            }
+          ],
+          "checks": [
+            {
+              "name": "status",
+              "ok": true,
+              "expected": 200,
+              "actual": 200
+            },
+            {
+              "name": "json",
+              "ok": true
+            },
+            {
+              "name": "json_pointer",
+              "path": "/launches/0/status",
+              "ok": true
+            }
+          ],
+          "limits": {
+            "timeout_seconds": 2.0,
+            "max_bytes": 262144,
+            "max_redirects": 3
+          },
+          "final_url": "https://api.imd.fun/launches",
+          "elapsed_ms": 178.199
+        },
+        "number": 1,
+        "budget_seconds": 3.0,
+        "exit_code": 0
+      },
+      {
+        "ok": true,
+        "probe": {
+          "schema": "endpoint-sentry/v1",
+          "url": "https://api.imd.fun/launches",
+          "checked_at": "2026-10-15T18:02:40.137062+00:00",
+          "ok": true,
+          "hops": [
+            {
+              "url": "https://api.imd.fun/launches",
+              "status": 200,
+              "headers_ms": 182.405,
+              "content_type": "application/json; charset=utf-8",
+              "content_encoding": "identity",
+              "body_bytes": 125968,
+              "body_sha256": "5ec0acb0fd0b0f0dceb68f8cf55b3ec6e399dcaf3fa928e3b1d35479724f85c4"
+            }
+          ],
+          "checks": [
+            {
+              "name": "status",
+              "ok": true,
+              "expected": 200,
+              "actual": 200
+            },
+            {
+              "name": "json",
+              "ok": true
+            },
+            {
+              "name": "json_pointer",
+              "path": "/launches/0/status",
+              "ok": true
+            }
+          ],
+          "limits": {
+            "timeout_seconds": 2.0,
+            "max_bytes": 262144,
+            "max_redirects": 3
+          },
+          "final_url": "https://api.imd.fun/launches",
+          "elapsed_ms": 224.01
+        },
+        "number": 2,
+        "budget_seconds": 3.0,
+        "exit_code": 0
+      },
+      {
+        "ok": true,
+        "probe": {
+          "schema": "endpoint-sentry/v1",
+          "url": "https://api.imd.fun/launches",
+          "checked_at": "2026-10-15T18:02:40.413604+00:00",
+          "ok": true,
+          "hops": [
+            {
+              "url": "https://api.imd.fun/launches",
+              "status": 200,
+              "headers_ms": 136.808,
+              "content_type": "application/json; charset=utf-8",
+              "content_encoding": "identity",
+              "body_bytes": 125968,
+              "body_sha256": "5ec0acb0fd0b0f0dceb68f8cf55b3ec6e399dcaf3fa928e3b1d35479724f85c4"
+            }
+          ],
+          "checks": [
+            {
+              "name": "status",
+              "ok": true,
+              "expected": 200,
+              "actual": 200
+            },
+            {
+              "name": "json",
+              "ok": true
+            },
+            {
+              "name": "json_pointer",
+              "path": "/launches/0/status",
+              "ok": true
+            }
+          ],
+          "limits": {
+            "timeout_seconds": 2.0,
+            "max_bytes": 262144,
+            "max_redirects": 3
+          },
+          "final_url": "https://api.imd.fun/launches",
+          "elapsed_ms": 181.437
+        },
+        "number": 3,
+        "budget_seconds": 3.0,
+        "exit_code": 0
+      }
+    ]
+  }
+}
